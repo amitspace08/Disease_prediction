@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.env
+*.egg-info/
+dist/
+build/
+
+# ML models (large binary files - optional, comment out if you want to commit them)
+# models/
+
+# Data files
+data/*.csv
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Node / React
+node_modules/
+frontend/dist/
+frontend/.env
+
+# Backend env
+backend/.env
+
+# Docker volumes
+mongodb_data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
