@@ -53,6 +53,72 @@ const OrganIllustration = ({ disease }) => {
   return null;
 };
 
+/* CIRCULAR RADIAL GAUGE COMPONENT FOR RESULT DISPLAY */
+const CircularGauge = ({ percentage, riskLevel, prediction }) => {
+  const radius = 64;
+  const strokeWidth = 12;
+  const normalizedRadius = radius - strokeWidth / 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  const isHigh = riskLevel === 'High';
+  const isMod = riskLevel === 'Moderate';
+
+  const strokeColor = isHigh ? '#ef4444' : isMod ? '#f59e0b' : '#10b981';
+  const bgStroke = isHigh ? '#fee2e2' : isMod ? '#fef3c7' : '#d1fae5';
+  const textColor = isHigh ? 'text-red-600' : isMod ? 'text-amber-600' : 'text-emerald-600';
+  const glowShadow = isHigh ? 'shadow-red-100 border-red-200' : isMod ? 'shadow-amber-100 border-amber-200' : 'shadow-emerald-100 border-emerald-200';
+
+  return (
+    <div className="flex flex-col items-center justify-center py-4 bg-gray-50/50 rounded-3xl border border-gray-100 my-2">
+      <div className={`relative p-3 rounded-full bg-white shadow-xl border ${glowShadow} flex items-center justify-center`}>
+        <svg height={radius * 2} width={radius * 2} className="transform -rotate-90">
+          {/* Background Track Circle */}
+          <circle
+            stroke={bgStroke}
+            fill="transparent"
+            strokeWidth={strokeWidth}
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+          />
+          {/* Progress Animated Circle */}
+          <circle
+            stroke={strokeColor}
+            fill="transparent"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference + ' ' + circumference}
+            style={{ strokeDashoffset, transition: 'stroke-dashoffset 1.2s ease-out' }}
+            strokeLinecap="round"
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+          />
+        </svg>
+
+        {/* Center Percentage Text */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
+          <span className={`text-3xl font-black ${textColor} leading-none tracking-tight`}>
+            {percentage}%
+          </span>
+          <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mt-1">
+            Risk Prob.
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-4 text-center">
+        <h4 className={`text-xl font-black uppercase tracking-wide ${textColor}`}>
+          {prediction}
+        </h4>
+        <p className="text-xs font-semibold text-gray-500 mt-0.5">
+          {isHigh ? 'High Disease Risk Detected' : 'Normal / Low Health Risk'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const diseaseConfigs = {
   heart: {
     id: 'heart',
@@ -312,10 +378,9 @@ const Prediction = () => {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-gray-100 flex flex-col lg:flex-row font-sans relative">
-      {/* 100% FIXED PINNED SIDEBAR THAT NEVER MOVES WHEN SCROLLING */}
+      {/* FIXED PINNED SIDEBAR THAT NEVER MOVES WHEN SCROLLING */}
       <aside className={`w-full lg:w-64 p-6 flex flex-col justify-between ${theme.sidebarBg} lg:fixed lg:left-0 lg:top-16 lg:h-[calc(100vh-4rem)] z-40 transition-all duration-300 flex-shrink-0`}>
         <div>
-          {/* Brand Header */}
           <div className="flex items-center space-x-3 mb-8">
             <div className="p-2.5 bg-white/15 rounded-xl backdrop-blur-sm border border-white/20 shadow-sm">
               <DiseaseIcon className="h-7 w-7 text-white" />
@@ -326,7 +391,6 @@ const Prediction = () => {
             </div>
           </div>
 
-          {/* Sidebar Navigation */}
           <nav className="space-y-2">
             <Link to="/dashboard" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-white/80 hover:bg-white/10 hover:text-white transition">
               <Home className="h-5 w-5" />
@@ -347,7 +411,6 @@ const Prediction = () => {
           </nav>
         </div>
 
-        {/* Quote at bottom */}
         <div className="mt-8 pt-4 border-t border-white/15">
           <p className="text-xs italic text-white/75 leading-relaxed text-center">
             {config.quote}
@@ -355,10 +418,10 @@ const Prediction = () => {
         </div>
       </aside>
 
-      {/* MAIN CONTENT AREA OFFSET BY SIDEBAR WIDTH */}
+      {/* MAIN CONTENT AREA OFFSET BY SIDEBAR */}
       <main className="flex-1 lg:ml-64 p-6 lg:p-8 max-w-7xl w-full">
         
-        {/* TOP HEADER CARD WITH 3D ORGAN GRAPHIC */}
+        {/* HEADER CARD WITH ORGAN ILLUSTRATION */}
         <div className="flex items-center justify-between bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-8 relative overflow-hidden">
           <div className="flex items-center space-x-4 z-10">
             <div className={`p-4 rounded-2xl ${theme.headerIconBg}`}>
@@ -378,7 +441,6 @@ const Prediction = () => {
               <span className="text-xs font-bold text-gray-700">XGBoost + SHAP Explainable AI</span>
             </div>
             
-            {/* Custom Organ Illustration */}
             <OrganIllustration disease={config.id} />
           </div>
         </div>
@@ -390,10 +452,9 @@ const Prediction = () => {
           </div>
         )}
 
-        {/* Form and Results Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* LEFT FORM COLUMN (7 cols) */}
+          {/* LEFT FORM COLUMN */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
               <h3 className="text-lg font-bold text-gray-900 flex items-center space-x-2">
@@ -454,7 +515,7 @@ const Prediction = () => {
             </form>
           </div>
 
-          {/* RIGHT RESULT COLUMN (5 cols) */}
+          {/* RIGHT RESULT COLUMN */}
           <div className="lg:col-span-5 flex flex-col space-y-6">
             
             <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100 flex-1 flex flex-col justify-between">
@@ -464,26 +525,12 @@ const Prediction = () => {
 
               {predictionResult ? (
                 <div className="space-y-6">
-                  {/* Status Banner */}
-                  <div className={`p-5 rounded-2xl border flex items-start space-x-4 ${
-                    predictionResult.risk_level === 'High' ? theme.badgeDanger : theme.badgeSuccess
-                  }`}>
-                    <div className="p-2.5 rounded-xl bg-white/90 shadow-sm">
-                      {predictionResult.risk_level === 'High' ? (
-                        <AlertTriangle className="h-7 w-7 text-red-600" />
-                      ) : (
-                        <ShieldCheck className="h-7 w-7 text-emerald-600" />
-                      )}
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-black">{predictionResult.prediction}</h4>
-                      <p className="text-xs mt-1 leading-relaxed opacity-90">
-                        {predictionResult.risk_level === 'High'
-                          ? `High risk indicators found for ${config.name}. Consult a doctor.`
-                          : `No significant health risks detected for ${config.name}.`}
-                      </p>
-                    </div>
-                  </div>
+                  {/* CIRCULAR RESULT GAUGE */}
+                  <CircularGauge
+                    percentage={Math.round(predictionResult.probability * 100)}
+                    riskLevel={predictionResult.risk_level}
+                    prediction={predictionResult.prediction}
+                  />
 
                   {/* 3 Metrics Pills */}
                   <div className="grid grid-cols-3 gap-3 text-center">
