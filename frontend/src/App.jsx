@@ -29,9 +29,9 @@ const AppRoutes = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-            <Route path="/predict/:id" element={<PrivateRoute><Prediction /></PrivateRoute>} />
-            <Route path="/results" element={<PrivateRoute><Results /></PrivateRoute>} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/predict/:id" element={<Prediction />} />
+            <Route path="/results" element={<Results />} />
             <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />
             <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           </Routes>
