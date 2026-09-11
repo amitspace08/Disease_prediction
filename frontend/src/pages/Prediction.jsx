@@ -311,9 +311,9 @@ const Prediction = () => {
   const theme = config.colorScheme;
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-gray-100 flex flex-col lg:flex-row font-sans">
-      {/* FIXED PINNED SIDEBAR UNDER TOP NAVBAR */}
-      <aside className={`w-full lg:w-64 p-6 flex flex-col justify-between ${theme.sidebarBg} lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] z-30 transition-all duration-300 flex-shrink-0`}>
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-100 flex flex-col lg:flex-row font-sans relative">
+      {/* 100% FIXED PINNED SIDEBAR THAT NEVER MOVES WHEN SCROLLING */}
+      <aside className={`w-full lg:w-64 p-6 flex flex-col justify-between ${theme.sidebarBg} lg:fixed lg:left-0 lg:top-16 lg:h-[calc(100vh-4rem)] z-40 transition-all duration-300 flex-shrink-0`}>
         <div>
           {/* Brand Header */}
           <div className="flex items-center space-x-3 mb-8">
@@ -355,8 +355,8 @@ const Prediction = () => {
         </div>
       </aside>
 
-      {/* SCROLLABLE MAIN CONTENT */}
-      <main className="flex-1 p-6 lg:p-8 max-w-7xl mx-auto w-full">
+      {/* MAIN CONTENT AREA OFFSET BY SIDEBAR WIDTH */}
+      <main className="flex-1 lg:ml-64 p-6 lg:p-8 max-w-7xl w-full">
         
         {/* TOP HEADER CARD WITH 3D ORGAN GRAPHIC */}
         <div className="flex items-center justify-between bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-8 relative overflow-hidden">
