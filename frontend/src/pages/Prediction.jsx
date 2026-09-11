@@ -3,9 +3,55 @@ import { useParams, Link } from 'react-router-dom';
 import { predictDisease } from '../services/predictionService';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { 
-  Heart, Activity, Droplet, Stethoscope, Home, Info, HeartHandshake, Contact,
-  CheckCircle2, AlertTriangle, ShieldCheck, Sparkles
+  Heart, Activity, Droplet, Stethoscope, Home, Info, HeartHandshake,
+  CheckCircle2, AlertTriangle, ShieldCheck, Sparkles, SlidersHorizontal
 } from 'lucide-react';
+
+const OrganIllustration = ({ disease }) => {
+  if (disease === 'heart') {
+    return (
+      <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center bg-red-50 rounded-2xl border border-red-100 p-2 shadow-sm flex-shrink-0">
+        <svg viewBox="0 0 100 100" className="w-full h-full text-red-500 fill-current drop-shadow-md">
+          <path d="M50 88s-32-20-40-38c-8-18 2-34 18-34 10 0 18 6 22 13 4-7 12-13 22-13 16 0 26 16 18 34-8 18-40 38-40 38z" />
+          <path d="M26 50h14l4-8 6 16 6-12 4 4h14" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+    );
+  }
+  if (disease === 'kidney') {
+    return (
+      <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center bg-blue-50 rounded-2xl border border-blue-100 p-2 shadow-sm flex-shrink-0">
+        <svg viewBox="0 0 100 100" className="w-full h-full text-blue-500 fill-current drop-shadow-md">
+          <path d="M30 25c-12 0-20 12-18 28 2 16 14 32 24 32 6 0 10-6 8-12-2-6-8-10-8-18s6-14 10-18c2-2-2-12-16-12z" />
+          <path d="M70 25c12 0 20 12 18 28-2 16-14 32-24 32-6 0-10-6-8-12 2-6 8-10 8-18s-6-14-10-18c-2-2 2-12 16-12z" />
+        </svg>
+      </div>
+    );
+  }
+  if (disease === 'diabetes') {
+    return (
+      <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center bg-purple-50 rounded-2xl border border-purple-100 p-2 shadow-sm flex-shrink-0">
+        <div className="w-14 h-18 bg-purple-600 rounded-xl flex flex-col items-center justify-between p-2 shadow-md border-2 border-purple-300 text-white">
+          <div className="w-full bg-purple-950 rounded py-1 text-center font-mono font-black text-xs text-emerald-300">
+            98
+          </div>
+          <div className="w-2.5 h-2.5 rounded-full bg-purple-200"></div>
+          <div className="text-[8px] font-extrabold tracking-widest text-purple-200">GLUCO</div>
+        </div>
+      </div>
+    );
+  }
+  if (disease === 'liver') {
+    return (
+      <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center bg-emerald-50 rounded-2xl border border-emerald-100 p-2 shadow-sm flex-shrink-0">
+        <svg viewBox="0 0 100 100" className="w-full h-full text-emerald-600 fill-current drop-shadow-md">
+          <path d="M18 35c15-10 45-12 62-2 10 7 12 22 2 32-15 15-40 25-60 15-8-4-10-18-4-45z" />
+        </svg>
+      </div>
+    );
+  }
+  return null;
+};
 
 const diseaseConfigs = {
   heart: {
@@ -19,7 +65,7 @@ const diseaseConfigs = {
     icon: Heart,
     colorScheme: {
       sidebarBg: 'bg-gradient-to-b from-red-800 via-red-900 to-red-950 text-white',
-      sidebarActive: 'bg-red-700/80 text-white shadow-inner',
+      sidebarActive: 'bg-red-700/90 text-white shadow-inner',
       headerTitle: 'text-gray-900',
       headerIconBg: 'bg-red-100 text-red-600',
       btnBg: 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-200',
@@ -81,7 +127,7 @@ const diseaseConfigs = {
     icon: Droplet,
     colorScheme: {
       sidebarBg: 'bg-gradient-to-b from-blue-800 via-blue-900 to-blue-950 text-white',
-      sidebarActive: 'bg-blue-700/80 text-white shadow-inner',
+      sidebarActive: 'bg-blue-700/90 text-white shadow-inner',
       headerTitle: 'text-gray-900',
       headerIconBg: 'bg-blue-100 text-blue-600',
       btnBg: 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-200',
@@ -147,7 +193,7 @@ const diseaseConfigs = {
     icon: Activity,
     colorScheme: {
       sidebarBg: 'bg-gradient-to-b from-purple-800 via-purple-900 to-purple-950 text-white',
-      sidebarActive: 'bg-purple-700/80 text-white shadow-inner',
+      sidebarActive: 'bg-purple-700/90 text-white shadow-inner',
       headerTitle: 'text-gray-900',
       headerIconBg: 'bg-purple-100 text-purple-600',
       btnBg: 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-200',
@@ -187,7 +233,7 @@ const diseaseConfigs = {
     icon: Stethoscope,
     colorScheme: {
       sidebarBg: 'bg-gradient-to-b from-emerald-800 via-emerald-900 to-emerald-950 text-white',
-      sidebarActive: 'bg-emerald-700/80 text-white shadow-inner',
+      sidebarActive: 'bg-emerald-700/90 text-white shadow-inner',
       headerTitle: 'text-gray-900',
       headerIconBg: 'bg-emerald-100 text-emerald-600',
       btnBg: 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-200',
@@ -230,7 +276,6 @@ const Prediction = () => {
   const [predictionResult, setPredictionResult] = useState(null);
 
   useEffect(() => {
-    // Pre-populate default values
     const defaults = {};
     config.fields.forEach(f => {
       defaults[f.name] = f.defaultValue !== undefined ? f.defaultValue : '';
@@ -266,92 +311,103 @@ const Prediction = () => {
   const theme = config.colorScheme;
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col lg:flex-row font-sans">
-      {/* LEFT SIDEBAR - Tailored per disease */}
-      <aside className={`w-full lg:w-64 p-6 flex flex-col justify-between ${theme.sidebarBg} transition-all duration-300`}>
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-100 flex flex-col lg:flex-row font-sans">
+      {/* FIXED PINNED SIDEBAR UNDER TOP NAVBAR */}
+      <aside className={`w-full lg:w-64 p-6 flex flex-col justify-between ${theme.sidebarBg} lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] z-30 transition-all duration-300 flex-shrink-0`}>
         <div>
           {/* Brand Header */}
           <div className="flex items-center space-x-3 mb-8">
-            <div className="p-2.5 bg-white/15 rounded-xl backdrop-blur-sm border border-white/20">
+            <div className="p-2.5 bg-white/15 rounded-xl backdrop-blur-sm border border-white/20 shadow-sm">
               <DiseaseIcon className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-bold tracking-wide">{config.brand}</h2>
-              <p className="text-xs text-white/70">{config.tagline}</p>
+              <h2 className="text-lg font-black tracking-wide leading-tight">{config.brand}</h2>
+              <p className="text-[11px] text-white/70">{config.tagline}</p>
             </div>
           </div>
 
-          {/* Navigation Links */}
+          {/* Sidebar Navigation */}
           <nav className="space-y-2">
-            <Link to="/dashboard" className="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition">
+            <Link to="/dashboard" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-white/80 hover:bg-white/10 hover:text-white transition">
               <Home className="h-5 w-5" />
               <span className="font-medium text-sm">Dashboard</span>
             </Link>
-            <div className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium text-sm ${theme.sidebarActive}`}>
+            <div className={`flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm ${theme.sidebarActive}`}>
               <Activity className="h-5 w-5" />
               <span>Prediction</span>
             </div>
-            <Link to="/history" className="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition">
+            <Link to="/history" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-white/80 hover:bg-white/10 hover:text-white transition">
               <Info className="h-5 w-5" />
-              <span>History</span>
+              <span className="font-medium text-sm">History</span>
             </Link>
-            <Link to="/profile" className="flex items-center space-x-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition">
+            <Link to="/profile" className="flex items-center space-x-3 px-4 py-3 rounded-xl text-white/80 hover:bg-white/10 hover:text-white transition">
               <HeartHandshake className="h-5 w-5" />
-              <span>Profile</span>
+              <span className="font-medium text-sm">Profile</span>
             </Link>
           </nav>
         </div>
 
-        {/* Bottom Quote */}
-        <div className="mt-8 pt-6 border-t border-white/15">
+        {/* Quote at bottom */}
+        <div className="mt-8 pt-4 border-t border-white/15">
           <p className="text-xs italic text-white/75 leading-relaxed text-center">
             {config.quote}
           </p>
         </div>
       </aside>
 
-      {/* MAIN CONTENT AREA */}
+      {/* SCROLLABLE MAIN CONTENT */}
       <main className="flex-1 p-6 lg:p-8 max-w-7xl mx-auto w-full">
-        {/* Header Banner */}
-        <div className="flex items-center justify-between bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
-          <div className="flex items-center space-x-4">
+        
+        {/* TOP HEADER CARD WITH 3D ORGAN GRAPHIC */}
+        <div className="flex items-center justify-between bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-8 relative overflow-hidden">
+          <div className="flex items-center space-x-4 z-10">
             <div className={`p-4 rounded-2xl ${theme.headerIconBg}`}>
-              <DiseaseIcon className="h-9 w-9" />
+              <DiseaseIcon className="h-8 w-8 sm:h-10 sm:w-10" />
             </div>
             <div>
-              <h1 className={`text-2xl lg:text-3xl font-extrabold ${theme.headerTitle}`}>
+              <h1 className={`text-2xl sm:text-3xl font-black ${theme.headerTitle}`}>
                 {config.name}
               </h1>
-              <p className="text-sm text-gray-500 mt-1">{config.subtitle}</p>
+              <p className="text-xs sm:text-sm text-gray-500 mt-1">{config.subtitle}</p>
             </div>
           </div>
-          <div className="hidden sm:flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200/80">
-            <Sparkles className={`h-5 w-5 ${theme.accentText}`} />
-            <span className="text-xs font-semibold text-gray-700">XGBoost + SHAP Explainable AI</span>
+
+          <div className="flex items-center space-x-6 z-10">
+            <div className="hidden md:flex items-center space-x-2 bg-gray-50 px-4 py-2.5 rounded-2xl border border-gray-200/80">
+              <Sparkles className={`h-4 w-4 ${theme.accentText}`} />
+              <span className="text-xs font-bold text-gray-700">XGBoost + SHAP Explainable AI</span>
+            </div>
+            
+            {/* Custom Organ Illustration */}
+            <OrganIllustration disease={config.id} />
           </div>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center space-x-3">
+          <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center space-x-3">
             <AlertTriangle className="h-5 w-5 flex-shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
-        {/* Split Grid Layout */}
+        {/* Form and Results Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* LEFT FORM COLUMN (7 cols) */}
-          <div className="lg:col-span-7 bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-gray-100">
-            <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center space-x-2">
-              <span>Enter Your Details</span>
-            </h3>
+          <div className="lg:col-span-7 bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900 flex items-center space-x-2">
+                <SlidersHorizontal className={`h-5 w-5 ${theme.accentText}`} />
+                <span>Enter Your Details</span>
+              </h3>
+              <span className="text-xs text-gray-400 font-medium">All parameters required</span>
+            </div>
 
             <form onSubmit={onSubmit} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {config.fields.map((field) => (
                   <div key={field.name} className="flex flex-col">
-                    <label className="text-xs font-semibold text-gray-600 mb-1.5 flex justify-between">
+                    <label className="text-xs font-semibold text-gray-700 mb-1.5 flex justify-between">
                       <span>{field.label}</span>
                       {field.unit && <span className="text-gray-400 font-normal">{field.unit}</span>}
                     </label>
@@ -361,7 +417,7 @@ const Prediction = () => {
                         name={field.name}
                         value={formData[field.name] !== undefined ? formData[field.name] : field.defaultValue}
                         onChange={handleChange}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition font-medium"
                       >
                         {field.options.map(opt => (
                           <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -375,7 +431,7 @@ const Prediction = () => {
                         value={formData[field.name] !== undefined ? formData[field.name] : ''}
                         onChange={handleChange}
                         required
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition font-medium"
                       />
                     )}
                   </div>
@@ -386,26 +442,25 @@ const Prediction = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`w-full py-3.5 px-6 rounded-xl font-bold text-sm transition transform active:scale-98 flex items-center justify-center space-x-2 ${theme.btnBg} disabled:opacity-50`}
+                  className={`w-full py-3.5 px-6 rounded-2xl font-bold text-sm transition transform active:scale-98 flex items-center justify-center space-x-2 ${theme.btnBg} disabled:opacity-50`}
                 >
                   {loading ? (
-                    <span>Processing with AI...</span>
+                    <span>Processing with Machine Learning...</span>
                   ) : (
-                    <>
-                      <span>Predict Risk</span>
-                    </>
+                    <span>Predict Risk</span>
                   )}
                 </button>
               </div>
             </form>
           </div>
 
-          {/* RIGHT PREDICTION RESULT COLUMN (5 cols) */}
+          {/* RIGHT RESULT COLUMN (5 cols) */}
           <div className="lg:col-span-5 flex flex-col space-y-6">
             
-            {/* Prediction Output Card */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex-1 flex flex-col justify-between">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Prediction Result</h3>
+            <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100 flex-1 flex flex-col justify-between">
+              <h3 className="text-lg font-bold text-gray-900 mb-4 pb-3 border-b border-gray-100">
+                Prediction Result
+              </h3>
 
               {predictionResult ? (
                 <div className="space-y-6">
@@ -413,7 +468,7 @@ const Prediction = () => {
                   <div className={`p-5 rounded-2xl border flex items-start space-x-4 ${
                     predictionResult.risk_level === 'High' ? theme.badgeDanger : theme.badgeSuccess
                   }`}>
-                    <div className="p-2 rounded-xl bg-white/80 shadow-sm">
+                    <div className="p-2.5 rounded-xl bg-white/90 shadow-sm">
                       {predictionResult.risk_level === 'High' ? (
                         <AlertTriangle className="h-7 w-7 text-red-600" />
                       ) : (
@@ -424,34 +479,34 @@ const Prediction = () => {
                       <h4 className="text-xl font-black">{predictionResult.prediction}</h4>
                       <p className="text-xs mt-1 leading-relaxed opacity-90">
                         {predictionResult.risk_level === 'High'
-                          ? `Significant signs detected for ${config.name}. Consult a clinician.`
+                          ? `High risk indicators found for ${config.name}. Consult a doctor.`
                           : `No significant health risks detected for ${config.name}.`}
                       </p>
                     </div>
                   </div>
 
-                  {/* 3 Metric Pills */}
+                  {/* 3 Metrics Pills */}
                   <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                      <p className="text-xs font-semibold text-gray-600">Model Accuracy</p>
-                      <p className="text-lg font-black text-gray-900 mt-1">{config.accuracy}</p>
+                    <div className="bg-gray-50 rounded-2xl p-3 border border-gray-100">
+                      <p className="text-[11px] font-bold text-gray-500 uppercase">Model Accuracy</p>
+                      <p className="text-base sm:text-lg font-black text-gray-900 mt-1">{config.accuracy}</p>
                     </div>
-                    <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                      <p className="text-xs font-semibold text-gray-600">Status</p>
-                      <p className={`text-base font-bold mt-1 ${predictionResult.risk_level === 'High' ? 'text-red-600' : 'text-emerald-600'}`}>
+                    <div className="bg-gray-50 rounded-2xl p-3 border border-gray-100">
+                      <p className="text-[11px] font-bold text-gray-500 uppercase">Status</p>
+                      <p className={`text-sm sm:text-base font-bold mt-1 ${predictionResult.risk_level === 'High' ? 'text-red-600' : 'text-emerald-600'}`}>
                         {predictionResult.risk_level === 'High' ? 'At Risk' : 'Healthy'}
                       </p>
                     </div>
-                    <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                      <p className="text-xs font-semibold text-gray-600">Risk Level</p>
-                      <p className={`text-base font-bold mt-1 ${predictionResult.risk_level === 'High' ? 'text-red-600' : 'text-emerald-600'}`}>
+                    <div className="bg-gray-50 rounded-2xl p-3 border border-gray-100">
+                      <p className="text-[11px] font-bold text-gray-500 uppercase">Risk Level</p>
+                      <p className={`text-sm sm:text-base font-bold mt-1 ${predictionResult.risk_level === 'High' ? 'text-red-600' : 'text-emerald-600'}`}>
                         {predictionResult.risk_level}
                       </p>
                     </div>
                   </div>
 
                   {/* Health Advice List */}
-                  <div className={`p-4 rounded-xl border ${theme.adviceBg}`}>
+                  <div className={`p-4 rounded-2xl border ${theme.adviceBg}`}>
                     <h5 className="text-xs font-bold text-gray-800 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
                       <CheckCircle2 className={`h-4 w-4 ${theme.bulletColor}`} />
                       <span>Health Advice</span>
@@ -468,7 +523,7 @@ const Prediction = () => {
 
                   {/* SHAP Explanation Graph */}
                   {predictionResult.explanation && predictionResult.explanation.length > 0 && (
-                    <div className="pt-2 border-t border-gray-100">
+                    <div className="pt-3 border-t border-gray-100">
                       <h5 className="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">
                         Top SHAP Contributing Factors
                       </h5>
@@ -490,25 +545,24 @@ const Prediction = () => {
                   )}
                 </div>
               ) : (
-                /* Default empty state matching the UI mockup */
-                <div className="py-12 px-4 text-center flex flex-col items-center justify-center space-y-4 my-auto">
-                  <div className={`p-4 rounded-full ${theme.headerIconBg}`}>
+                /* Default empty state */
+                <div className="py-10 px-4 text-center flex flex-col items-center justify-center space-y-4 my-auto">
+                  <div className={`p-4 rounded-2xl ${theme.headerIconBg}`}>
                     <DiseaseIcon className="h-10 w-10" />
                   </div>
-                  <h4 className="text-base font-bold text-gray-800">Ready for Health Assessment</h4>
+                  <h4 className="text-base font-extrabold text-gray-900">Ready for Health Assessment</h4>
                   <p className="text-xs text-gray-500 max-w-xs leading-relaxed">
-                    Fill out your health details on the left and click <strong className={theme.accentText}>Predict Risk</strong> to receive an instant machine learning risk evaluation.
+                    Fill out your parameters on the left and click <strong className={theme.accentText}>Predict Risk</strong> to receive an instant machine learning risk evaluation.
                   </p>
                   
-                  {/* Default Static Health Advice preview */}
-                  <div className={`w-full p-4 rounded-xl border text-left mt-4 ${theme.adviceBg}`}>
+                  <div className={`w-full p-4 rounded-2xl border text-left mt-4 ${theme.adviceBg}`}>
                     <h5 className="text-xs font-bold text-gray-800 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
                       <CheckCircle2 className={`h-4 w-4 ${theme.bulletColor}`} />
                       <span>General Health Advice</span>
                     </h5>
-                    <ul className="space-y-1">
+                    <ul className="space-y-1.5">
                       {config.advice.map((item, idx) => (
-                        <li key={idx} className="text-xs text-gray-600 flex items-start space-x-2">
+                        <li key={idx} className="text-xs text-gray-700 flex items-start space-x-2">
                           <span className={`font-bold ${theme.bulletColor}`}>•</span>
                           <span>{item}</span>
                         </li>
